@@ -1,0 +1,472 @@
+$date
+	Sun Jan 12 17:16:02 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module testbench $end
+$var wire 8 ! data_out [7:0] $end
+$var reg 8 " address [7:0] $end
+$var reg 1 # clk $end
+$var reg 8 $ data_in [7:0] $end
+$var reg 8 % opcode [7:0] $end
+$var reg 1 & reset $end
+$scope module ias $end
+$var wire 8 ' ac_data [7:0] $end
+$var wire 1 ( add_enable $end
+$var wire 8 ) address [7:0] $end
+$var wire 1 * clk $end
+$var wire 8 + data_in [7:0] $end
+$var wire 8 , data_out [7:0] $end
+$var wire 1 - increment_pc $end
+$var wire 8 . ir_data [7:0] $end
+$var wire 1 / load_ac $end
+$var wire 1 0 load_ir $end
+$var wire 1 1 load_mq $end
+$var wire 1 2 load_pc $end
+$var wire 8 3 mem_data [7:0] $end
+$var wire 1 4 mem_read $end
+$var wire 1 5 mem_write $end
+$var wire 8 6 mq_data [7:0] $end
+$var wire 8 7 opcode [7:0] $end
+$var wire 8 8 pc_data [7:0] $end
+$var wire 1 9 reset $end
+$scope module ac $end
+$var wire 1 ( add_enable $end
+$var wire 1 * clk $end
+$var wire 1 / load_ac $end
+$var wire 8 : mem_data [7:0] $end
+$var wire 1 9 reset $end
+$var reg 8 ; ac_data [7:0] $end
+$upscope $end
+$scope module mq $end
+$var wire 1 * clk $end
+$var wire 1 1 load_mq $end
+$var wire 8 < mem_data [7:0] $end
+$var wire 1 9 reset $end
+$var reg 8 = mq_data [7:0] $end
+$upscope $end
+$scope module pc $end
+$var wire 8 > address [7:0] $end
+$var wire 1 * clk $end
+$var wire 1 - increment_pc $end
+$var wire 1 2 load_pc $end
+$var wire 1 9 reset $end
+$var reg 8 ? pc_data [7:0] $end
+$upscope $end
+$scope module ir $end
+$var wire 1 * clk $end
+$var wire 1 0 load_ir $end
+$var wire 8 @ mem_data [7:0] $end
+$var wire 1 9 reset $end
+$var reg 8 A ir_data [7:0] $end
+$upscope $end
+$scope module cu $end
+$var wire 1 * clk $end
+$var wire 8 B opcode [7:0] $end
+$var wire 1 9 reset $end
+$var reg 1 C add_enable $end
+$var reg 1 D increment_pc $end
+$var reg 8 E ir_reg [7:0] $end
+$var reg 1 F load_ac $end
+$var reg 1 G load_ir $end
+$var reg 1 H load_mq $end
+$var reg 1 I load_pc $end
+$var reg 1 J mem_read $end
+$var reg 1 K mem_write $end
+$var reg 2 L state [1:0] $end
+$upscope $end
+$scope module mem $end
+$var wire 8 M address [7:0] $end
+$var wire 1 * clk $end
+$var wire 8 N data_in [7:0] $end
+$var wire 1 4 mem_read $end
+$var wire 1 5 mem_write $end
+$var reg 8 O mem_data [7:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx O
+b0 N
+b0 M
+b0 L
+0K
+0J
+0I
+0H
+0G
+0F
+b0 E
+0D
+0C
+b0 B
+b0 A
+bx @
+b0 ?
+b0 >
+b0 =
+bx <
+b0 ;
+bx :
+19
+b0 8
+b0 7
+b0 6
+05
+04
+bx 3
+02
+01
+00
+0/
+b0 .
+0-
+b0 ,
+b0 +
+0*
+b0 )
+0(
+b0 '
+1&
+b0 %
+b0 $
+0#
+b0 "
+b0 !
+$end
+#5
+1#
+1*
+#10
+0#
+0*
+b10 %
+b10 7
+b10 B
+b11001 $
+b11001 +
+b11001 N
+b1 "
+b1 )
+b1 >
+b1 M
+0&
+09
+#15
+b1 L
+1D
+1-
+1G
+10
+1J
+14
+1#
+1*
+#20
+0#
+0*
+#25
+b10 L
+b10 E
+0D
+0-
+0G
+00
+0J
+04
+bx A
+bx .
+b1 ?
+b1 8
+1#
+1*
+#30
+0#
+0*
+#35
+b11 L
+1K
+15
+1#
+1*
+#40
+0#
+0*
+#45
+b0 L
+0K
+05
+1#
+1*
+#50
+0#
+0*
+b110010 $
+b110010 +
+b110010 N
+b10 "
+b10 )
+b10 >
+b10 M
+#55
+b1 L
+1D
+1-
+1G
+10
+1J
+14
+1#
+1*
+#60
+0#
+0*
+#65
+b10 L
+0D
+0-
+0G
+00
+0J
+04
+b10 ?
+b10 8
+1#
+1*
+#70
+0#
+0*
+#75
+b11 L
+1K
+15
+1#
+1*
+#80
+0#
+0*
+#85
+b0 L
+0K
+05
+1#
+1*
+#90
+0#
+0*
+b1 "
+b1 )
+b1 >
+b1 M
+b1 %
+b1 7
+b1 B
+#95
+b1 L
+1D
+1-
+1G
+10
+1J
+14
+1#
+1*
+#100
+0#
+0*
+#105
+b11001 O
+b11001 3
+b11001 :
+b11001 <
+b11001 @
+b10 L
+b1 E
+0D
+0-
+0G
+00
+0J
+04
+b11 ?
+b11 8
+1#
+1*
+#110
+0#
+0*
+#115
+b11 L
+1F
+1/
+1J
+14
+1#
+1*
+#120
+0#
+0*
+#125
+b0 L
+0J
+04
+0F
+0/
+b11001 ;
+b11001 '
+b11001 !
+b11001 ,
+1#
+1*
+#130
+0#
+0*
+b10 "
+b10 )
+b10 >
+b10 M
+b11 %
+b11 7
+b11 B
+#135
+b1 L
+1D
+1-
+1G
+10
+1J
+14
+1#
+1*
+#140
+0#
+0*
+#145
+b110010 O
+b110010 3
+b110010 :
+b110010 <
+b110010 @
+b10 L
+b11 E
+0D
+0-
+0G
+00
+0J
+04
+b11001 A
+b11001 .
+b100 ?
+b100 8
+1#
+1*
+#150
+0#
+0*
+#155
+b11 L
+1C
+1(
+1J
+14
+1#
+1*
+#160
+0#
+0*
+#165
+b0 L
+0C
+0(
+0J
+04
+b1001011 ;
+b1001011 '
+b1001011 !
+b1001011 ,
+1#
+1*
+#170
+0#
+0*
+b11 "
+b11 )
+b11 >
+b11 M
+b10 %
+b10 7
+b10 B
+#175
+b1 L
+1D
+1-
+1G
+10
+1J
+14
+1#
+1*
+#180
+0#
+0*
+#185
+bx O
+bx 3
+bx :
+bx <
+bx @
+b10 L
+b10 E
+0D
+0-
+0G
+00
+0J
+04
+b110010 A
+b110010 .
+b101 ?
+b101 8
+1#
+1*
+#190
+0#
+0*
+#195
+b11 L
+1K
+15
+1#
+1*
+#200
+0#
+0*
+#205
+b0 L
+0K
+05
+1#
+1*
+#210
+0#
+0*
+#215
+b1 L
+1D
+1-
+1G
+10
+1J
+14
+1#
+1*
+#220
+0#
+0*
