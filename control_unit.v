@@ -6,6 +6,7 @@ module control_unit (
     output reg mem_read, mem_write,
     output reg increment_pc, // PC artırma sinyali
     output reg add_enable // Toplama işlemi için sinyal
+    // output reg store_enable  // AC'deki veriyi belleğe yazma sinyali
 );
     // Durum tanımları
     parameter FETCH = 2'b00, DECODE = 2'b01, EXECUTE = 2'b10, WRITE_BACK = 2'b11;
@@ -15,7 +16,8 @@ module control_unit (
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             load_ac <= 0; load_mq <= 0; load_pc <= 0; load_ir <= 0;
-            mem_read <= 0; mem_write <= 0; increment_pc <= 0; add_enable <= 0;
+            mem_read <= 0; mem_write <= 0; increment_pc <= 0; add_enable <= 0; 
+            // store_enable <= 0;
             state <= FETCH;
             // Tüm sinyalleri sıfırla
             
@@ -52,6 +54,7 @@ module control_unit (
                         8'd2: begin // Store
                             //$display("Log 9 : Opcode: %d, State: %b, Operation: Store", opcode, state);
                             mem_write <= 1;  // Belleğe yazma işlemi başlat
+                            // store_enable <= 1; 
                         end
                         8'd3: begin // Add
                             //$display("Log 10 : Opcode: %d, State: %b, Operation: Add start", opcode, state);
@@ -78,7 +81,8 @@ module control_unit (
                 WRITE_BACK: begin
                     // Tüm sinyalleri sıfırla ve FETCH'e dön
                     load_ac <= 0; load_mq <= 0; load_pc <= 0; load_ir <= 0;
-                    mem_read <= 0; mem_write <= 0; increment_pc <= 0; add_enable <= 0;
+                    mem_read <= 0; mem_write <= 0; increment_pc <= 0; add_enable <= 0; 
+                    // store_enable <= 0;
                     state <= FETCH;
                 end
             endcase

@@ -5,6 +5,7 @@ module AC (
     input add_enable, // Bellekteki değeri AC'ye eklemek için
     input [7:0] mem_data,
     output reg [7:0] ac_data
+    // output reg [7:0] ac_to_mem  // Belleğe yazılacak veri
 );
     always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -15,6 +16,7 @@ module AC (
         //$display("AC toplama icerisi ac_data: %d, Mem: %d", ac_data, mem_data);
         ac_data <= ac_data + mem_data; // Bellekten alınan değer AC'ye eklenir
         //$display("AC toplama sonu ac_data: %d, Mem: %d", ac_data, mem_data);
+        // ac_to_mem <= ac_data; // Belleğe yazılacak veri
     end
 end
 

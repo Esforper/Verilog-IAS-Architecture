@@ -16,8 +16,28 @@ module IAS (
     MQ mq(clk, reset, load_mq, mem_data, mq_data);
     PC pc(clk, reset, load_pc, increment_pc, address, pc_data);
     IR ir(clk, reset, load_ir, mem_data, ir_data);
+    // control_unit cu(clk, reset, opcode, load_ac, load_mq, load_pc, load_ir, mem_read, mem_write, increment_pc, add_enable, store_enable);
     control_unit cu(clk, reset, opcode, load_ac, load_mq, load_pc, load_ir, mem_read, mem_write, increment_pc, add_enable);
+
+
+    // memory mem(
+    //     .clk, 
+    //     .mem_read, 
+    //     .mem_write, 
+    //     .address,   
+    //     .data_in(store_enable ? ac_data : 8'b0),  
+    //     .mem_data);
+
     memory mem(clk, mem_read, mem_write, address, data_in, mem_data);
+
+    // memory mem(
+    //     .clk(clk), 
+    //     .mem_read(mem_read), 
+    //     .mem_write(mem_write), 
+    //     .address(address), 
+    //     .data_in(store_enable ? ac_data : data_in), 
+    //     .mem_data(mem_data)
+    // );
 
     // Çıkış
     assign data_out = ac_data; // Örneğin, sonuç AC üzerinden verilir
