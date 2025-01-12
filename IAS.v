@@ -9,7 +9,7 @@ module IAS (
     wire load_ac, load_mq, load_pc, load_ir;
     wire mem_read, mem_write, increment_pc;
     wire [7:0] ac_data, mq_data, pc_data, ir_data, mem_data;
-    wire add_enable;
+    wire add_enable, store_ac_enable;
 
     // Modülleri bağla
     AC ac(clk, reset, load_ac, add_enable,  mem_data, ac_data);
@@ -17,7 +17,7 @@ module IAS (
     PC pc(clk, reset, load_pc, increment_pc, address, pc_data);
     IR ir(clk, reset, load_ir, mem_data, ir_data);
     // control_unit cu(clk, reset, opcode, load_ac, load_mq, load_pc, load_ir, mem_read, mem_write, increment_pc, add_enable, store_enable);
-    control_unit cu(clk, reset, opcode, load_ac, load_mq, load_pc, load_ir, mem_read, mem_write, increment_pc, add_enable);
+    control_unit cu(clk, reset, opcode, load_ac, load_mq, load_pc, load_ir, mem_read, mem_write, increment_pc, add_enable, store_ac_enable);
 
 
     // memory mem(
@@ -28,7 +28,7 @@ module IAS (
     //     .data_in(store_enable ? ac_data : 8'b0),  
     //     .mem_data);
 
-    memory mem(clk, mem_read, mem_write, address, data_in, mem_data);
+    memory mem(clk, mem_read, mem_write, address, (store_ac_enable == 1) ? ac_data : data_in, mem_data);
 
     // memory mem(
     //     .clk(clk), 

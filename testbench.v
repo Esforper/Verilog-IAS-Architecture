@@ -156,18 +156,27 @@ module testbench;
         address = 8'd2;
         #40;        //en az 30 gerekiyor.
 
-        // Sonucu bellek 3'e yaz (STORE işlemi)
-        $display("Sonuç bellek 3'e yazılıyor...");
-        opcode = 8'd2; // STORE komutu
-        address = 8'd3; // Bellek 3'e yazılacak
-        #40;
+    
+
+        // // Sonucu bellek 3'e yaz (STORE işlemi)
+        // $display("Sonuç bellek 3'e yazılıyor...");
+        // opcode = 8'd2; // STORE komutu
+        // address = 8'd3; // Bellek 3'e yazılacak
+        // #40;
+
+        // AC'den belleğe yazma (STORE_AC)
+        $display("AC'deki veri belleğe yazılıyor...");
+        opcode = 8'd6;  // Yeni STORE_AC opcode
+        address = 8'd3; // Bellek adresi
+        #40; // Verilerin yazılması için bekle
+
 
         // Sonuç kontrolü: Bellek 3'ün verisini kontrol et
-        $display("Sonuç Kontrolü...");
-        $display("Bellek[3] Beklenen Değeri: 75, Gerçek Değeri: %d", ias.mem.mem[3]);
+        $display("Sonuc Kontrolu...");
+        $display("Bellek[3] Beklenen Degeri: 75, Gercek Degeri: %d", ias.mem.mem[3]);
 
         if (ias.mem.mem[3] == 8'd75) begin
-            $display("Test Başarılı: Bellek[3]'e doğru değer yazıldı.");
+            $display("Test Basarili: Bellek[3]'e dogru deger yazildi.");
         end else begin
             $display("Test Başarısız: Beklenen değer 75, ancak %d alındı.", ias.mem.mem[3]);
         end

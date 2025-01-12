@@ -5,7 +5,8 @@ module control_unit (
     output reg load_ac, load_mq, load_pc, load_ir,
     output reg mem_read, mem_write,
     output reg increment_pc, // PC artırma sinyali
-    output reg add_enable // Toplama işlemi için sinyal
+    output reg add_enable, // Toplama işlemi için sinyal
+    output reg store_ac_enable  // AC'deki veriyi belleğe yazma sinyali
     // output reg store_enable  // AC'deki veriyi belleğe yazma sinyali
 );
     // Durum tanımları
@@ -17,6 +18,7 @@ module control_unit (
         if (reset) begin
             load_ac <= 0; load_mq <= 0; load_pc <= 0; load_ir <= 0;
             mem_read <= 0; mem_write <= 0; increment_pc <= 0; add_enable <= 0; 
+            store_ac_enable <= 0; // Yeni sinyal
             // store_enable <= 0;
             state <= FETCH;
             // Tüm sinyalleri sıfırla
@@ -72,6 +74,10 @@ module control_unit (
                             load_pc <= 1;   // PC'yi yükle
                             increment_pc <= 0; // Jump sırasında PC artırılmaz
                         end
+                         8'd6: begin // STORE_AC (Yeni komut)
+                            mem_write <= 1;       // Belleğe yazma işlemi başlat
+                            store_ac_enable <= 1; // AC'deki veriyi yazma
+                        end
                         default: ; // No operation
                     endcase
                     //$display("After Operation: mem_read: %b, load_ac: %b", mem_read, load_ac); // Debugging the signals
@@ -82,6 +88,7 @@ module control_unit (
                     // Tüm sinyalleri sıfırla ve FETCH'e dön
                     load_ac <= 0; load_mq <= 0; load_pc <= 0; load_ir <= 0;
                     mem_read <= 0; mem_write <= 0; increment_pc <= 0; add_enable <= 0; 
+                    store_ac_enable <= 0; // Yeni sinyal sıfırlama
                     // store_enable <= 0;
                     state <= FETCH;
                 end
