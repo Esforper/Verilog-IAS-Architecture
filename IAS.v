@@ -18,18 +18,11 @@ module IAS (
     IR ir(clk, reset, load_ir, mem_data, ir_data);
     // control_unit cu(clk, reset, opcode, load_ac, load_mq, load_pc, load_ir, mem_read, mem_write, increment_pc, add_enable, store_enable);
     control_unit cu(clk, reset, opcode, load_ac, load_mq, load_pc, load_ir, mem_read, mem_write, increment_pc, add_enable, store_ac_enable);
-
-
-    // memory mem(
-    //     .clk, 
-    //     .mem_read, 
-    //     .mem_write, 
-    //     .address,   
-    //     .data_in(store_enable ? ac_data : 8'b0),  
-    //     .mem_data);
-
     memory mem(clk, mem_read, mem_write, address, (store_ac_enable == 1) ? ac_data : data_in, mem_data);
-
+    assign data_out = ac_data; // Örneğin, sonuç AC üzerinden verilir
+    
+    
+    
     // memory mem(
     //     .clk(clk), 
     //     .mem_read(mem_read), 
@@ -40,7 +33,7 @@ module IAS (
     // );
 
     // Çıkış
-    assign data_out = ac_data; // Örneğin, sonuç AC üzerinden verilir
+    
     //assign data_in = ac_data; // Örneğin, sonuç AC üzerinden verilir
 
     // assign data_in = (load_ac) ? ac_data :

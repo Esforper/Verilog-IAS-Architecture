@@ -7,7 +7,6 @@ module control_unit (
     output reg increment_pc, // PC artırma sinyali
     output reg add_enable, // Toplama işlemi için sinyal
     output reg store_ac_enable  // AC'deki veriyi belleğe yazma sinyali
-    // output reg store_enable  // AC'deki veriyi belleğe yazma sinyali
 );
     // Durum tanımları
     parameter FETCH = 2'b00, DECODE = 2'b01, EXECUTE = 2'b10, WRITE_BACK = 2'b11;
@@ -19,7 +18,6 @@ module control_unit (
             load_ac <= 0; load_mq <= 0; load_pc <= 0; load_ir <= 0;
             mem_read <= 0; mem_write <= 0; increment_pc <= 0; add_enable <= 0; 
             store_ac_enable <= 0; // Yeni sinyal
-            // store_enable <= 0;
             state <= FETCH;
             // Tüm sinyalleri sıfırla
             
@@ -54,9 +52,7 @@ module control_unit (
                             //$display("Log 8 : Opcode: %d, State: %b, Operation: Load end / mem_read: %d , load_ac: %d  ", opcode, state, mem_read, load_ac); // Burada işlemi de yazdırıyoruz
                         end
                         8'd2: begin // Store
-                            //$display("Log 9 : Opcode: %d, State: %b, Operation: Store", opcode, state);
                             mem_write <= 1;  // Belleğe yazma işlemi başlat
-                            // store_enable <= 1; 
                         end
                         8'd3: begin // Add
                             //$display("Log 10 : Opcode: %d, State: %b, Operation: Add start", opcode, state);
@@ -67,10 +63,12 @@ module control_unit (
                         8'd4: begin // Sub
                             //$display("Log 12 : Opcode: %d, State: %b, Operation: Sub start", opcode, state);
                             mem_read <= 1;   // Bellekten veri oku
+                            load_pc <= 1; 
                             load_ac <= 1;    // Çıkarma sonucu AC'ye yazılacak
                         end
                         8'd5: begin // Jump
                             //$display("Log 13 : Opcode: %d, State: %b, Operation: Jump", opcode, state);
+                            mem_read <= 1;  // Bellekten hedef adresi oku
                             load_pc <= 1;   // PC'yi yükle
                             increment_pc <= 0; // Jump sırasında PC artırılmaz
                         end

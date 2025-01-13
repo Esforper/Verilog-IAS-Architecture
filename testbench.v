@@ -37,13 +37,14 @@ module testbench;
         $display("Reset işlemi tamamlandı.");
 
         // Monitor ile izlenecek sinyalleri ekleyin
-        $monitor("Time: %0t | opcode: %d | address: %d | data_in: %d | mem_write: %d | mem_read: %d | AC: %d | data_out: %d | ias.mem.mem[1]: %d | ias.mem.mem[2]: %d | ias.mem.mem[3]: %d | add_enable: %d | load_ac: %d | load_mq: %d | load_pc: %d | load_ir: %d", 
-                $time, opcode, address, data_in, ias.mem.mem_write, ias.mem.mem_read, ias.ac.ac_data, data_out, ias.mem.mem[1], ias.mem.mem[2], ias.mem.mem[3], ias.ac.add_enable, ias.cu.load_ac, ias.cu.load_mq, ias.cu.load_pc, ias.cu.load_ir);
+        // $monitor("Time: %0t | opcode: %d | address: %d | data_in: %d | mem_write: %d | mem_read: %d | AC: %d | data_out: %d | ias.mem.mem[11]: %d | ias.mem.mem[12]: %d | ias.mem.mem[13]: %d | add_enable: %d | load_ac: %d | load_mq: %d | load_pc: %d | load_ir: %d", 
+        //         $time, opcode, address, data_in, ias.mem.mem_write, ias.mem.mem_read, ias.ac.ac_data, data_out, ias.mem.mem[11], ias.mem.mem[12], ias.mem.mem[13], ias.ac.add_enable, ias.cu.load_ac, ias.cu.load_mq, ias.cu.load_pc, ias.cu.load_ir);
 
-        /*
+        
         // Test 1: Belleğe veri yazma (manüel yükleme)
         
         // Belleğe veri yazma (manüel yükleme)
+        $display("TEST 1 : Load testi");
         $display("Load testi");
         $display("Bellege veri yukleniyor...");
         ias.mem.mem[1] = 8'd150; // Belleğin 1. adresine 150 değerini yükle
@@ -63,10 +64,10 @@ module testbench;
         end else begin
             $display("Test Basarisiz: Beklenen deger 150, ancak %d alindi.", data_out);
         end
-        */
+        
 
 
-        /*
+        
 
         // İlk ayarlar
         clk = 0;
@@ -79,9 +80,10 @@ module testbench;
         #10 reset = 0;
 
 
-
+        $display("------------------------");
         // Test 2: Store İşlemi
         // 1. Belleğe veri yükle
+        $display("TEST 2 : Store testi");
         $display("Store testi");
         $display("Bellege veri yukleniyor...");
         address = 8'd1;       // Belleğin 1. adresine veri yazılacak
@@ -112,10 +114,10 @@ module testbench;
             $display("Test Basarisiz: Beklenen deger 123, ancak %d alindi.", ias.mem.mem[2]);
         end
         
-        */
+        
+        $display("------------------------");
 
-
-        /*
+        
         // İlk ayarlar
         clk = 0;
         reset = 1;
@@ -125,21 +127,21 @@ module testbench;
 
         // Reset işlemi
         #10 reset = 0;
-        */
+        
 
         // Test 3: ADD işlemi
         //Testte 25 ve 50 değerlerini toplayıp 75 değerini elde etmeye çalışıyoruz.
-
+        $display("TEST 3 : ADD testi.");
         $display("ADD testi.");
         // Belleğe 1. değeri yaz
         $display("Belleğe veri yazılıyor...");
-        address = 8'd1;
+        address = 8'd11;
         data_in = 8'd25; // İlk değer
         opcode = 8'd2; // STORE komutu
         #40;
 
         // Belleğe 2. değeri yaz
-        address = 8'd2;
+        address = 8'd12;
         data_in = 8'd50; // İkinci değer
         opcode = 8'd2; // STORE komutu
         #40;
@@ -147,13 +149,13 @@ module testbench;
         // İlk değeri AC'ye yükle (LOAD işlemi)
         $display("AC'ye veri yükleniyor...");
         opcode = 8'd1; // LOAD komutu
-        address = 8'd1;
+        address = 8'd11;
         #40;
 
         // İkinci değeri AC ile topla (ADD işlemi)
         $display("AC ile veri toplanıyor...");
         opcode = 8'd3; // ADD komutu
-        address = 8'd2;
+        address = 8'd12;
         #40;        //en az 30 gerekiyor.
 
     
@@ -167,19 +169,59 @@ module testbench;
         // AC'den belleğe yazma (STORE_AC)
         $display("AC'deki veri belleğe yazılıyor...");
         opcode = 8'd6;  // Yeni STORE_AC opcode
-        address = 8'd3; // Bellek adresi
+        address = 8'd13; // Bellek adresi
         #40; // Verilerin yazılması için bekle
 
 
         // Sonuç kontrolü: Bellek 3'ün verisini kontrol et
         $display("Sonuc Kontrolu...");
-        $display("Bellek[3] Beklenen Degeri: 75, Gercek Degeri: %d", ias.mem.mem[3]);
+        $display("Bellek[13] Beklenen Degeri: 75, Gercek Degeri: %d", ias.mem.mem[13]);
 
-        if (ias.mem.mem[3] == 8'd75) begin
-            $display("Test Basarili: Bellek[3]'e dogru deger yazildi.");
+        if (ias.mem.mem[13] == 8'd75) begin
+            $display("Test Basarili: Bellek[13]'e dogru deger yazildi.");
         end else begin
-            $display("Test Başarısız: Beklenen değer 75, ancak %d alındı.", ias.mem.mem[3]);
+            $display("Test Başarısız: Beklenen değer 75, ancak %d alındı.", ias.mem.mem[13]);
         end
+
+        $display("------------------------");
+
+        // Jump komutunu test et
+        $display("TEST 4 : JUMP testi");
+        $display("PC'ye atama yapılıyor...");
+
+        // İlk ayarlar
+        clk = 0;
+        reset = 1;
+        opcode = 8'd0;
+        address = 8'd0;
+        data_in = 8'd0;
+
+        // Reset işlemi
+        #10 reset = 0;
+
+        // Test için başlangıç durumu
+        ias.cu.load_pc = 0;      // PC başlangıçta yüklenmiyor
+        ias.mem.mem[20] = 8'd10; // Jump adresini belleğe yazıyoruz
+        address = 8'd20;         // Jump adresi
+        opcode = 8'd5;           // Jump komutu (Opcode: 5)
+
+        // Jump işlemi başlıyor
+        $display("Jump islemi basliyor...");
+        #40; // FETCH, DECODE, EXECUTE ve WRITE_BACK için yeterli süre bekle
+
+        // Jump sonrası PC değerini kontrol et
+        $display("Jump sonrasi PC kontrol ediliyor...");
+        $display("Beklenen PC degeri: 20, Gercek PC degeri: %d", ias.pc.pc_data);
+
+        if (ias.pc.pc_data == 8'd20) begin
+            $display("Test Basarili: Jump komutu dogru calisti.");
+        end else begin
+            $display("Test Basarisiz: Beklenen PC degeri 20, ancak %d alindi.", ias.pc.pc_data);
+        end
+
+        $display("------------------------");
+
+
 
         // Simülasyonu bitir
         #10;
